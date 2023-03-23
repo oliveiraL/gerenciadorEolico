@@ -26,4 +26,18 @@ public class AerogeradorServiceImpl implements AerogeradorService {
     public Aerogerador findById(Long id) {
         return aerogeradores.stream().filter(aerogerador -> aerogerador.getId() == id).findFirst().get();
     }
+
+    @Override
+    public Aerogerador update(Long id, Aerogerador aerogerador) {
+        aerogerador.setId(id);
+        int index = aerogeradores.indexOf(aerogerador);
+        aerogeradores.set(index, aerogerador);
+        return aerogerador;
+    }
+
+    @Override
+    public void delete(Long id) {
+        Aerogerador aerogerador = Aerogerador.builder().id(id).build();
+        aerogeradores.remove(aerogerador);
+    }
 }

@@ -34,4 +34,16 @@ public class AerogeradorController {
     public Aerogerador save(@RequestBody Aerogerador aerogerador) {
         return aerogeradorService.save(aerogerador);
     }
+
+    @PutMapping("{id}")
+    public Aerogerador update(@PathVariable Long id, @RequestBody Aerogerador aerogerador){
+        return aerogeradorService.update(id, aerogerador);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id){
+        aerogeradorService.delete(id);
+    }
+
+
 }
