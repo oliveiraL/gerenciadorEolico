@@ -1,7 +1,9 @@
 package br.com.ada.gerenciadorEolico.controller;
 
 import br.com.ada.gerenciadorEolico.domain.Aerogerador;
+import br.com.ada.gerenciadorEolico.dto.AerogeradorSaveDTO;
 import br.com.ada.gerenciadorEolico.service.AerogeradorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,17 +33,27 @@ public class AerogeradorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Aerogerador save(@RequestBody Aerogerador aerogerador) {
+    public Aerogerador save(@Valid @RequestBody AerogeradorSaveDTO dto) {
+        Aerogerador aerogerador = Aerogerador.builder()
+                .modelo(dto.getModelo())
+                .numeroSerie(dto.getNumeroSerie())
+                .status(dto.getStatus())
+                .build();
         return aerogeradorService.save(aerogerador);
     }
 
     @PutMapping("{id}")
-    public Aerogerador update(@PathVariable Long id, @RequestBody Aerogerador aerogerador){
+    public Aerogerador update(@PathVariable Long id, @RequestBody AerogeradorSaveDTO dto) {
+        Aerogerador aerogerador = Aerogerador.builder()
+                .modelo(dto.getModelo())
+                .numeroSerie(dto.getNumeroSerie())
+                .status(dto.getStatus())
+                .build();
         return aerogeradorService.update(id, aerogerador);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id) {
         aerogeradorService.delete(id);
     }
 

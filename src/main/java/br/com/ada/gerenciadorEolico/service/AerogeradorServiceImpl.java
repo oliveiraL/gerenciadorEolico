@@ -1,6 +1,7 @@
 package br.com.ada.gerenciadorEolico.service;
 
 import br.com.ada.gerenciadorEolico.domain.Aerogerador;
+import br.com.ada.gerenciadorEolico.exceptions.AerogeradorNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class AerogeradorServiceImpl implements AerogeradorService {
 
     @Override
     public Aerogerador save(Aerogerador aerogerador) {
+
         aerogerador.setId(aerogeradores.size() + 1L);
         aerogeradores.add(aerogerador);
         return aerogerador;
@@ -24,7 +26,9 @@ public class AerogeradorServiceImpl implements AerogeradorService {
 
     @Override
     public Aerogerador findById(Long id) {
-        return aerogeradores.stream().filter(aerogerador -> aerogerador.getId() == id).findFirst().get();
+        return aerogeradores.stream()
+                .filter(aerogerador -> aerogerador.getId() == id)
+                .findFirst().orElseThrow(AerogeradorNotFoundException::new);
     }
 
     @Override
