@@ -18,7 +18,8 @@ public class AerogeradorServiceImpl implements AerogeradorService {
 
     @Override
     public Aerogerador save(Aerogerador aerogerador) {
-
+        //Não pode salvar aerogerador com o mesmo numero de serie,
+        // caso contratio lançar exception -> 422
         aerogerador.setId(aerogeradores.size() + 1L);
         aerogeradores.add(aerogerador);
         return aerogerador;
@@ -33,6 +34,7 @@ public class AerogeradorServiceImpl implements AerogeradorService {
 
     @Override
     public Aerogerador update(Long id, Aerogerador aerogerador) {
+        //Verificar se o aerogerador existe, caso não exista lançar uma exception
         aerogerador.setId(id);
         int index = aerogeradores.indexOf(aerogerador);
         aerogeradores.set(index, aerogerador);
@@ -41,6 +43,7 @@ public class AerogeradorServiceImpl implements AerogeradorService {
 
     @Override
     public void delete(Long id) {
+        //Verificar se o aerogerador existe, caso não exista lançar uma exception
         Aerogerador aerogerador = Aerogerador.builder().id(id).build();
         aerogeradores.remove(aerogerador);
     }
