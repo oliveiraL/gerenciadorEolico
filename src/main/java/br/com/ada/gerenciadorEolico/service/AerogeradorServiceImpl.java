@@ -2,49 +2,46 @@ package br.com.ada.gerenciadorEolico.service;
 
 import br.com.ada.gerenciadorEolico.domain.Aerogerador;
 import br.com.ada.gerenciadorEolico.exceptions.AerogeradorNotFoundException;
+import br.com.ada.gerenciadorEolico.repository.AerogeradorRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AerogeradorServiceImpl implements AerogeradorService {
 
-    private List<Aerogerador> aerogeradores = new ArrayList<>();
+    private final AerogeradorRepository repository;
 
     public List<Aerogerador> list() {
-        return aerogeradores;
+        return (List<Aerogerador>) repository.findAll();
     }
 
     @Override
     public Aerogerador save(Aerogerador aerogerador) {
-        //Não pode salvar aerogerador com o mesmo numero de serie,
-        // caso contratio lançar exception -> 422
-        aerogerador.setId(aerogeradores.size() + 1L);
-        aerogeradores.add(aerogerador);
-        return aerogerador;
+        return repository.save(aerogerador);
     }
 
     @Override
     public Aerogerador findById(Long id) {
-        return aerogeradores.stream()
-                .filter(aerogerador -> aerogerador.getId() == id)
-                .findFirst().orElseThrow(AerogeradorNotFoundException::new);
+        return repository.findById(id).orElseThrow(AerogeradorNotFoundException::new);
     }
 
     @Override
     public Aerogerador update(Long id, Aerogerador aerogerador) {
-        //Verificar se o aerogerador existe, caso não exista lançar uma exception
-        aerogerador.setId(id);
-        int index = aerogeradores.indexOf(aerogerador);
-        aerogeradores.set(index, aerogerador);
-        return aerogerador;
+        if (repository.existsById(id)) {
+            aerogerador.setId(id);
+            return repository.save(aerogerador);
+        }
+        throw new AerogeradorNotFoundException();
     }
 
     @Override
     public void delete(Long id) {
-        //Verificar se o aerogerador existe, caso não exista lançar uma exception
-        Aerogerador aerogerador = Aerogerador.builder().id(id).build();
-        aerogeradores.remove(aerogerador);
+        if (!repository.existsById(id)) {
+            throw new AerogeradorNotFoundException();
+        }
+        repository.deleteById(id);
     }
 }

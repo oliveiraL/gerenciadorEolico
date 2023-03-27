@@ -7,12 +7,15 @@ import lombok.Getter;
 
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Setter
 @Getter
 public class AerogeradorSaveDTO {
     @NotBlank(message = "Modelo é um campo obrigatorio")
     private String modelo;
+
     @NotBlank
     private String numeroSerie;
     @NotNull
