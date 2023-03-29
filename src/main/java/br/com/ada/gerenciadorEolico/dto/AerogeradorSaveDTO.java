@@ -20,4 +20,7 @@ public class AerogeradorSaveDTO {
     private String numeroSerie;
     @NotNull
     private AerogeradorStatus status;
+
+    @NotNull
+    private Long parqueEolicoId;
 }

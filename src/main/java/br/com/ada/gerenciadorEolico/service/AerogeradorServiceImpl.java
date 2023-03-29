@@ -44,4 +44,5 @@ public class AerogeradorServiceImpl implements AerogeradorService {
         }
         repository.deleteById(id);
     }
+
 }

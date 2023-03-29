@@ -1,6 +1,7 @@
 package br.com.ada.gerenciadorEolico.controller;
 
 import br.com.ada.gerenciadorEolico.domain.Aerogerador;
+import br.com.ada.gerenciadorEolico.domain.ParqueEolico;
 import br.com.ada.gerenciadorEolico.dto.AerogeradorSaveDTO;
 import br.com.ada.gerenciadorEolico.service.AerogeradorService;
 import jakarta.validation.Valid;
@@ -37,6 +38,11 @@ public class AerogeradorController {
         Aerogerador aerogerador = Aerogerador.builder()
                 .modelo(dto.getModelo())
                 .numeroSerie(dto.getNumeroSerie())
+                .parqueEolico(
+                        ParqueEolico
+                                .builder().id(dto.getParqueEolicoId())
+                                .build()
+                )
                 .status(dto.getStatus())
                 .build();
         return aerogeradorService.save(aerogerador);
