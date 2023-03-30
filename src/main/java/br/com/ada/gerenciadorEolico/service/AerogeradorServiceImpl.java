@@ -2,6 +2,7 @@ package br.com.ada.gerenciadorEolico.service;
 
 import br.com.ada.gerenciadorEolico.domain.Aerogerador;
 import br.com.ada.gerenciadorEolico.exceptions.AerogeradorNotFoundException;
+import br.com.ada.gerenciadorEolico.exceptions.AerogeradorNumeroSerieException;
 import br.com.ada.gerenciadorEolico.repository.AerogeradorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class AerogeradorServiceImpl implements AerogeradorService {
 
     @Override
     public Aerogerador save(Aerogerador aerogerador) {
+        if (repository.existsByNumeroSerie(aerogerador.getNumeroSerie())){
+            throw new AerogeradorNumeroSerieException();
+        }
         return repository.save(aerogerador);
     }
 

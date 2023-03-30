@@ -3,6 +3,7 @@ package br.com.ada.gerenciadorEolico.controller;
 import br.com.ada.gerenciadorEolico.domain.Aerogerador;
 import br.com.ada.gerenciadorEolico.domain.ParqueEolico;
 import br.com.ada.gerenciadorEolico.dto.AerogeradorSaveDTO;
+import br.com.ada.gerenciadorEolico.mapper.AerogeradorMapper;
 import br.com.ada.gerenciadorEolico.service.AerogeradorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class AerogeradorController {
 
 
     private final AerogeradorService aerogeradorService;
+    private final AerogeradorMapper mapper;
 
     @GetMapping
     public List<Aerogerador> list() {
@@ -35,26 +37,15 @@ public class AerogeradorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Aerogerador save(@Valid @RequestBody AerogeradorSaveDTO dto) {
-        Aerogerador aerogerador = Aerogerador.builder()
-                .modelo(dto.getModelo())
-                .numeroSerie(dto.getNumeroSerie())
-                .parqueEolico(
-                        ParqueEolico
-                                .builder().id(dto.getParqueEolicoId())
-                                .build()
-                )
-                .status(dto.getStatus())
-                .build();
+        Aerogerador aerogerador = mapper.aerogeradorSaveDTOToAerogerador(dto);
+        aerogerador.setParqueEolico(ParqueEolico.builder().id(dto.getParqueEolicoId()).build());
         return aerogeradorService.save(aerogerador);
     }
 
     @PutMapping("{id}")
     public Aerogerador update(@PathVariable Long id, @RequestBody AerogeradorSaveDTO dto) {
-        Aerogerador aerogerador = Aerogerador.builder()
-                .modelo(dto.getModelo())
-                .numeroSerie(dto.getNumeroSerie())
-                .status(dto.getStatus())
-                .build();
+        Aerogerador aerogerador = mapper.aerogeradorSaveDTOToAerogerador(dto);
+        aerogerador.setParqueEolico(ParqueEolico.builder().id(dto.getParqueEolicoId()).build());
         return aerogeradorService.update(id, aerogerador);
     }
 

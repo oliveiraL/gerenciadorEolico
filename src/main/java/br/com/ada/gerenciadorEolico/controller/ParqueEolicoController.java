@@ -4,6 +4,8 @@ package br.com.ada.gerenciadorEolico.controller;
 import br.com.ada.gerenciadorEolico.domain.Aerogerador;
 import br.com.ada.gerenciadorEolico.domain.ParqueEolico;
 import br.com.ada.gerenciadorEolico.dto.AerogeradorSaveDTO;
+import br.com.ada.gerenciadorEolico.dto.ParqueEolicoListDTO;
+import br.com.ada.gerenciadorEolico.mapper.ParqueEolicoMapper;
 import br.com.ada.gerenciadorEolico.service.ParqueEolicoService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
@@ -20,10 +22,11 @@ public class ParqueEolicoController {
 
     private final ParqueEolicoService service;
 
+    private final ParqueEolicoMapper mapper;
 
     @GetMapping
-    public List<ParqueEolico> list() {
-        return service.list();
+    public List<ParqueEolicoListDTO> list() {
+        return service.list().stream().map(mapper::parqueEolicoToParqueEolicoListDTO).toList();
     }
 
 

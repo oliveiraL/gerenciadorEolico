@@ -25,6 +25,5 @@ public class ParqueEolico {
     private Endereco endereco;
 
     @OneToMany(mappedBy = "parqueEolico")
-    @JsonIgnoreProperties("parqueEolico")
     private List<Aerogerador> aerogeradores;
 }
