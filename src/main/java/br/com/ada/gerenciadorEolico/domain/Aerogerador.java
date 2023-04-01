@@ -1,6 +1,9 @@
 package br.com.ada.gerenciadorEolico.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Aerogerador {
 
     @Id

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -25,5 +26,15 @@ public class ParqueEolico {
     private Endereco endereco;
 
     @OneToMany(mappedBy = "parqueEolico")
+    @JsonIgnoreProperties("parqueEolico")
     private List<Aerogerador> aerogeradores;
+
+    @ManyToMany
+    @JoinTable(
+            name = "parque_eolico_usuarios",
+            joinColumns = @JoinColumn(name = "parque_eolico_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuarios_id")
+    )
+    @JsonIgnoreProperties("parqueEolicos")
+    private Set<Usuario> usuarios;
 }

@@ -8,6 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AerogeradorMapper {
 
-    @Mapping(target = "parqueEolico", ignore = true)
+//    @Mapping(target = "parqueEolico",source = "parqueEolicoId")
     Aerogerador aerogeradorSaveDTOToAerogerador(AerogeradorSaveDTO dto);
 }
