@@ -9,6 +9,7 @@ import br.com.ada.gerenciadorEolico.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +21,17 @@ public class InitProject implements ApplicationRunner {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private ParqueEolicoRepository parqueEolicoRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Usuario usuario = usuarioRepository.findById(1L).get();
-        ParqueEolico parqueEolico = parqueEolicoRepository.findById(52L).get();
-        parqueEolico.getUsuarios().add(usuario);
-        parqueEolicoRepository.save(parqueEolico);
+        Usuario usuario = new Usuario();
+        usuario.setUsername("lucio");
+        usuario.setPassword(passwordEncoder.encode("1234"));
+        usuario.setName("Lucio");
+        usuario.setEmail("lucio@email.com");
+        usuario.setCargo(Cargo.ADMIN);
+
+        usuarioRepository.save(usuario);
     }
 }

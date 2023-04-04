@@ -1,4 +1,7 @@
 package br.com.ada.gerenciadorEolico.dto;
 
-public record UsuarioLogin(String login, String senha) {
+import jakarta.validation.constraints.NotBlank;
+
+public record UsuarioLogin(
+        @NotBlank String login, @NotBlank String senha) {
 }
