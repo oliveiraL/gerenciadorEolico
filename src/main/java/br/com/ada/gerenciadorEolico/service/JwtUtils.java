@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -18,13 +19,15 @@ public class JwtUtils {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String generateJwtToken(Authentication authentication) {
+    public String generateJwtToken(Authentication authentication, Map<String, Object> claims) {
 
         Usuario userPrincipal = (Usuario) authentication.getPrincipal();
 
-        return Jwts.builder().setSubject((userPrincipal.getUsername()))
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 30))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 

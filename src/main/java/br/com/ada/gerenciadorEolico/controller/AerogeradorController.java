@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RequiredArgsConstructor
 @RequestMapping("aerogeradores")
@@ -42,6 +44,7 @@ public class AerogeradorController {
         return aerogeradorService.save(aerogerador);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_DEV')")
     @PutMapping("{id}")
     public Aerogerador update(@PathVariable Long id, @RequestBody AerogeradorSaveDTO dto) {
         Aerogerador aerogerador = mapper.aerogeradorSaveDTOToAerogerador(dto);
@@ -49,6 +52,7 @@ public class AerogeradorController {
         return aerogeradorService.update(id, aerogerador);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
         aerogeradorService.delete(id);

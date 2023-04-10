@@ -45,4 +45,11 @@ public class HandlerException {
     }
 
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ErrorDTO handlerAerogeradorConflito(Exception ex) {
+        return ErrorDTO.builder().message(ex.getMessage()).build();
+    }
+
+
 }

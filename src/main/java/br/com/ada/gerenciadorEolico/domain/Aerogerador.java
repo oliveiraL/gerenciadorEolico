@@ -33,6 +33,7 @@ public class Aerogerador {
     private AerogeradorStatus status;
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private ParqueEolico parqueEolico;
 }

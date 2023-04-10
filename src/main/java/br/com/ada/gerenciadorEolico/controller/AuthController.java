@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("login")
 @RequiredArgsConstructor
@@ -28,7 +31,8 @@ public class AuthController {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(login.login(), login.senha()));
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return jwtUtils.generateJwtToken(authentication);
+        HashMap<String, Object> map = new HashMap();
+        map.put("email", "lucio@email.com");
+        return jwtUtils.generateJwtToken(authentication, map);
     }
 }

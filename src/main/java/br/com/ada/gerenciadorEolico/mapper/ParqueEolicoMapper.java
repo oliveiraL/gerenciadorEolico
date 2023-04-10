@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ParqueEolicoMapper {
 
-
+    @Mapping(source = "cep", target = "endereco", ignore = true)
     ParqueEolico parqueEolicoSaveDTOToParqueEolico(ParqueEolicoSaveDTO dto);
 
     ParqueEolicoListDTO parqueEolicoToParqueEolicoListDTO(ParqueEolico parqueEolico);

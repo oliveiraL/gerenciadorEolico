@@ -26,11 +26,11 @@ public class InitProject implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         Usuario usuario = new Usuario();
-        usuario.setUsername("lucio");
+        usuario.setUsername("ada");
         usuario.setPassword(passwordEncoder.encode("1234"));
         usuario.setName("Lucio");
         usuario.setEmail("lucio@email.com");
-        usuario.setCargo(Cargo.ADMIN);
+        usuario.setCargo(Cargo.DEV);
 
         usuarioRepository.save(usuario);
     }
